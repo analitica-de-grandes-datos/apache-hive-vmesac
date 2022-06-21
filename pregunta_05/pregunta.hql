@@ -45,3 +45,20 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS tabla_final;
+
+CREATE TABLE tabla_final AS 
+SELECT SUBSTRING(c4, 1, 4) AS anio,
+letra
+FROM tbl0
+LATERAL VIEW explode(c5) tbl0 AS letra 
+;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT anio, letra, count(1)
+FROM tabla_final
+GROUP BY anio, letra
+ORDER BY anio;
+
+
