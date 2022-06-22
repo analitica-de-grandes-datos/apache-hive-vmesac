@@ -45,4 +45,13 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
+DROP TABLE IF EXISTS tabla_final;
 
+CREATE TABLE tabla_final AS 
+SELECT UPPER(CONCAT_WS(':', c5)) AS c5_mayus
+FROM tbl0;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT c5_mayus
+FROM tabla_final;

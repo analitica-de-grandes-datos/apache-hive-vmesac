@@ -59,6 +59,6 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT anio, letra, count(1)
 FROM tabla_final
 GROUP BY anio, letra
-ORDER BY anio;
+ORDER BY anio, letra;
 
 
