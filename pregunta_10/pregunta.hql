@@ -29,4 +29,12 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
+DROP TABLE IF EXISTS tabla_datos;
 
+CREATE TABLE tabla_datos AS 
+SELECT key, value FROM t0 LATERAL VIEW explode(c3) letra_num;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT key, COUNT(1) 
+FROM tabla_datos GROUP BY key;

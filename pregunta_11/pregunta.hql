@@ -28,4 +28,12 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
+DROP TABLE IF EXISTS tabla_datos;
+CREATE TABLE tabla_datos AS 
+SELECT c1, SIZE(c2), SIZE(c3) 
+FROM t0;
 
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * 
+FROM tabla_datos;
